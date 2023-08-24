@@ -5,13 +5,6 @@ import { useState } from 'react'
 import '../App.css'
 
 
-
-// function to determine the value of ace
-
-
-
-// function to trigger dealer hidden card
-
 function Deck() {
     var deck = []
     const  [dealerCard,setDealerCard] = useState([]);
@@ -20,10 +13,6 @@ function Deck() {
     const  [dealerSum,setDealerSum] = useState(0);
     const  [playerSum, setPlayerSum] = useState(0);
 
-    // const [dealerAce,setDealerAce] = useState(false)
-    // const [playerAce,setPlayerAce] = useState(false)
-
-   // const [dealerHidden,setDealerHidden] = useState(true)
 
     function createDeck (){ // call a image
         let values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
@@ -36,9 +25,7 @@ function Deck() {
     }
 
     // function to give random card
-    function assignCard(gamerCards){
-        // by default should give 2 cardsfor each player
-        // randomly genrate index of deck
+    function assignCard(gamerCards,setGamerCard){
         const randomIndex = Math.floor(Math.random()*(deck.length)) // random value 1 to 52
         if (gamerCards.length>=1){
             let val =gamerCards[0].split("-") //values 7-D
@@ -51,8 +38,9 @@ function Deck() {
                 // if a player has J Q K already we cant assign one more J Q K  
             }
         }
-        setDealerCard(gamerCards.push(deck[randomIndex]))
-        console.log("*****",gamerCards)
+        gamerCards.push(deck[randomIndex])
+        setGamerCard(gamerCards)
+        console.log(gamerCards)
     }
     function addCard(){
         // update the list of player with new card
@@ -109,14 +97,14 @@ function Deck() {
             createDeck()
         }
         if (dealerCard.length===0){
-            assignCard(dealerCard)
-            assignCard(dealerCard)
+            assignCard(dealerCard,setDealerCard)
+            assignCard(dealerCard,setDealerCard)
             checkSum(dealerCard,setDealerSum)
             
         }
         if (playerCard.length===0){
-            assignCard(playerCard)
-            assignCard(playerCard)
+            assignCard(playerCard,setPlayerCard)
+            assignCard(playerCard,setPlayerCard)
             checkSum(playerCard,setPlayerSum)
         }
     },[])
@@ -125,22 +113,24 @@ function Deck() {
     <div className='container'>
         <div className="computer">
             {/* Step 2 */}
-            <Card imgName ="2-C" />
-            <Card imgName ="8-D"  />
-            
+            {dealerCard.map((img) => (
+                <Card imgName={img} />
+            ))}
+           
             <SumName  sum={dealerSum} name={"Dealer"} />
         </div>
         <div>
             <div className='MidDiv'>
-                <button onClick={()=>assignCard(playerCard)}>Take</button>
+                <button onClick={()=>assignCard(playerCard,setPlayerCard)}>Take</button>
 
                  
                 <button onClick={()=>checkWin()}>Stand</button>
             </div>
         </div>
         <div className="player">
-            <Card imgName ="5-C"  />
-            <Card imgName ="2-H"  />
+            {playerCard.map((item)=>(
+                <Card imgName ={item}  />
+            ))}
             <SumName sum={playerSum} name={"player"} />
         </div>
     </div>
@@ -155,6 +145,7 @@ function SumName(props){
         </div>
     )
 }
+
 // if (sum>21){
 //     document.write('sorry you have lost better luck next time')
 // }
