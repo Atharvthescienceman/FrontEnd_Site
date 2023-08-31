@@ -6,7 +6,7 @@ import '../App.css'
 
 
 function Deck() {
-    var deck = []
+    const [deck,setDeck] = useState([])
     const  [dealerCard,setDealerCard] = useState([]);
     const  [playerCard, setPlayerCard] = useState([]);
 
@@ -22,6 +22,7 @@ function Deck() {
                 deck.push(values[i]+"-"+type[j]) // 7-D
             }
         }
+        setDeck(deck)
     }
 
     // function to give random card
@@ -29,26 +30,22 @@ function Deck() {
         const randomIndex = Math.floor(Math.random()*(deck.length)) // random value 1 to 52
         if (gamerCards.length>=1){
             let val =gamerCards[0].split("-") //values 7-D
-            console.log("$$$$$",val)
 
             while (val[0]==="J"| val[0] ==="K" |val[0] ==="Q" | gamerCards[0]===deck[randomIndex] ){
                 console.log("*"*10)
-                const randomIndex = Math.floor(Math.random()*(deck.length)) // random value 1 to 52
+                randomIndex = Math.floor(Math.random()*(deck.length)) // random value 1 to 52
                 val = deck[randomIndex].split("-") // 7-D
                 // if a player has J Q K already we cant assign one more J Q K  
             }
         }
-        gamerCards.push(deck[randomIndex])
-        setGamerCard(gamerCards)
-        console.log(gamerCards)
-    }
-    function addCard(){
-        // update the list of player with new card
-        let temp = Math.floor(Math.random()*52);
-        playerCard.push()
-    }
+        // gamerCards.push(deck[randomIndex])
+        // setGamerCard(gamerCards)
+        const newGamerCards = [...gamerCards, deck[randomIndex]];
+            setGamerCard(newGamerCards);
 
-    // function to calculate the sum of cards
+        console.log(gamerCards,'i am here')
+    }
+    // function to calculate the sum of card
     function checkSum(gamersCards,setSum){
         let sum=0;
         let ace =false;
