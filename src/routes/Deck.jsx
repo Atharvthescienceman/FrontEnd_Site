@@ -27,7 +27,7 @@ function Deck() {
 
     // function to give random card
     function assignCard(gamerCards,setGamerCard){
-        const randomIndex = Math.floor(Math.random()*(deck.length)) // random value 1 to 52
+        var  randomIndex = Math.floor(Math.random()*(deck.length)) // random value 1 to 52
         if (gamerCards.length>=1){
             let val =gamerCards[0].split("-") //values 7-D
 
@@ -39,11 +39,11 @@ function Deck() {
             }
         }
         // gamerCards.push(deck[randomIndex])
-        // setGamerCard(gamerCards)
-        const newGamerCards = [...gamerCards, deck[randomIndex]];
-            setGamerCard(newGamerCards);
+        // setGamerCard(gamerCard   
+        gamerCards = [...gamerCards, deck[randomIndex]];
+            setGamerCard(gamerCards);
+            console.log(playerCard,dealerCard)
 
-        console.log(gamerCards,'i am here')
     }
     // function to calculate the sum of card
     function checkSum(gamersCards,setSum){
@@ -73,13 +73,7 @@ function Deck() {
     }
 
     function checkWin(){
-        // should be called when player hits take/stand
-        // conditions
-            // 1. should not exceed 21 ~ both
-            // 2. whoever == 21 isthe winner
-            // 3. if less then 21 
-                    // Player,Dealer ... the greater one is the winner
-        console.log("You reached here")
+        console.log("You reached checkeinm fnc")
         console.log(dealerSum,playerSum)
         if (playerSum>21 | dealerSum===21 | playerSum<dealerSum){
             console.log("dealer won")
@@ -95,6 +89,7 @@ function Deck() {
         }
         if (dealerCard.length===0){
             assignCard(dealerCard,setDealerCard)
+            console.log("hiuii")
             assignCard(dealerCard,setDealerCard)
             checkSum(dealerCard,setDealerSum)
             
